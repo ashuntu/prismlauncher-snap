@@ -22,7 +22,7 @@ jobs:
             jq .  | grep tag_name | grep -v beta | grep -v rc | head -n 1 | cut -d'"' -f4 | tr -d 'v'
           )
           if [ ${#VERSION} -gt 0 ]; then
-            sed -i 's/\s*\(source-tag: \).*$/\1'"$VERSION"'/' snap/snapcraft.yaml
+            sed -i 's/\s*\(source-tag: \).*$/\1"'"$VERSION"'"/' snap/snapcraft.yaml
           fi
 
       - name: Check for modified files
