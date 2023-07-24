@@ -21,6 +21,7 @@ jobs:
             curl -sL https://api.github.com/repos/PrismLauncher/PrismLauncher/releases |
             jq .  | grep tag_name | grep -v beta | grep -v rc | head -n 1 | cut -d'"' -f4 | tr -d 'v'
           )
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
           if [ ${#VERSION} -gt 0 ]; then
             sed -i 's/\(\s*source-tag: \).*$/\1"'"$VERSION"'"/' snap/snapcraft.yaml
           fi
@@ -35,5 +36,5 @@ jobs:
         run: |
           git config --global user.name 'ashuntu'
           git config --global user.email '101582426+ashuntu@users.noreply.github.com'
-          git commit -am "Automatic sync to latest release"
+          git commit -am "auto: Update to ${{  env.VERSION }}"
           git push
