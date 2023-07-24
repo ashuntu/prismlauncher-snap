@@ -1,18 +1,39 @@
-name: Open a PR if a new update is available
+# https://github.com/kenvandine/element-desktop/blob/main/.github/workflows/sync-release.yml
+name: Sync with upstream
 
 on:
+  # Runs at 15:00 UTC every day
   schedule:
-    - cron: '0 15 * * *'
+    - cron:  '0 15 * * *'
+  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 jobs:
-  update-snapcraft-yaml:
+  get-version:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout this repo
-        uses: actions/checkout@v3
-      - name: Run desktop-snaps action
-        uses: ubuntu/desktop-snaps@add-action
+      - uses: actions/checkout@v3
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          repo: ${{ github.repository }}
+          token: ${{ secrets.REPO_SCOPED_TOKEN }}
+      - name: Fetch release version
+        run: |
+          VERSION=$(
+            curl -sL https://api.github.com/repos/PrismLauncher/PrismLauncher/releases |
+            jq .  | grep tag_name | grep -v beta | grep -v rc | head -n 1 | cut -d'"' -f4 | tr -d 'v'
+          )
+          if [ ${#VERSION} -gt 0 ]; then
+            sed -i 's/\s*\(source-tag: \).*$/\1'"$VERSION"'/' snap/snapcraft.yaml
+          fi
+
+      - name: Check for modified files
+        id: git-check
+        run: |
+          MODIFIED=$([ -z "`git status --porcelain`" ] && echo "false" || echo "true")
+          echo "modified=$MODIFIED" >> $GITHUB_OUTPUT
+      - name: Commit latest release version
+        if: steps.git-check.outputs.modified == 'true'
+        run: |
+          git config --global user.name 'ashuntu'
+          git config --global user.email '101582426+ashuntu@users.noreply.github.com'
+          git commit -am "Automatic sync to latest release"
+          git push
