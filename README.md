@@ -1,8 +1,12 @@
 # PrismLauncher Snap
 
+[![prismlauncher](https://snapcraft.io/prismlauncher/badge.svg)](https://snapcraft.io/prismlauncher)
+
 Snap for the [PrismLauncher][prismlauncher] [Minecraft][minecraft] launcher. This Snap is *unofficial* and not supported directly by the PrismLauncher team, MultiMC, or Microsoft/Mojang.
 
 [**See PrismLauncher's README for more information.**][prismlauncher]
+
+[![Get it from the Snap Store](https://snapcraft.io/static/images/badges/en/snap-store-black.svg)](https://snapcraft.io/prismlauncher)
 
 ## User: Install
 
