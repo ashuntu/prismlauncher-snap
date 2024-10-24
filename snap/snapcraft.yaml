@@ -29,7 +29,7 @@ parts:
       - "-DCMAKE_BUILD_TYPE=RelWithDebInfo"
       - "-DENABLE_LTO=ON"
       - "-DLauncher_BUILD_PLATFORM=snap"
-      - "-DLauncher_QT_VERSION_MAJOR='5'"
+      - "-DLauncher_QT_VERSION_MAJOR='6'"
     override-pull: |
       craftctl default
       # Fix the icon reference in the desktop file
@@ -44,8 +44,7 @@ parts:
       - libgl1-mesa-dev
       - extra-cmake-modules
     build-snaps:
-      - kf5-5-106-qt-5-15-9-core22
-      - kf5-5-106-qt-5-15-9-core22-sdk
+      - kde-qt6-core22-sdk
     stage-packages:
       - openjdk-21-jre
       - openjdk-17-jre
@@ -57,7 +56,7 @@ apps:
     desktop: usr/share/applications/org.prismlauncher.PrismLauncher.desktop
     command: usr/bin/prismlauncher
     extensions:
-      - kde-neon
+      - kde-neon-6
     environment:
       PRISMLAUNCHER_DATA_DIR: "$SNAP_USER_COMMON/PrismLauncher"
     plugs:
