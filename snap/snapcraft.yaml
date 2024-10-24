@@ -58,6 +58,8 @@ apps:
     command: usr/bin/prismlauncher
     extensions:
       - kde-neon
+    environment:
+      PRISMLAUNCHER_DATA_DIR: "$SNAP_USER_COMMON/PrismLauncher"
     plugs:
       - home
       - opengl
