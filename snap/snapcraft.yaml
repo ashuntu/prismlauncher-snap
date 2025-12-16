@@ -19,7 +19,7 @@ architectures:
 parts:
   prismlauncher:
     source: https://github.com/PrismLauncher/PrismLauncher.git
-    source-tag: "9.4"
+    source-tag: "10.0.0-pre1"
     parse-info:
       - usr/share/metainfo/org.prismlauncher.PrismLauncher.metainfo.xml
     plugin: cmake
