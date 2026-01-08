@@ -1,6 +1,6 @@
 name: prismlauncher
 license: GPL-3.0-only
-base: core22
+base: core24
 website: https://prismlauncher.org/
 source-code: https://github.com/PrismLauncher/PrismLauncher
 issues: https://github.com/PrismLauncher/PrismLauncher/issues
@@ -12,9 +12,9 @@ adopt-info: prismlauncher
 grade: devel
 confinement: strict
 
-architectures:
-  - build-on: amd64
-  - build-on: arm64
+platforms:
+  amd64:
+  arm64:
 
 parts:
   prismlauncher:
@@ -43,12 +43,24 @@ parts:
       - scdoc
       - libgl1-mesa-dev
       - extra-cmake-modules
+      - cmark
+      - libcmark-dev
+      - gamemode
+      - gamemode-dev
+      - libqrencode-dev
+      - libarchive-dev
+      - libtomlplusplus-dev
+      - libxkbcommon-dev
     build-snaps:
-      - kde-qt6-core22-sdk
+      - kde-qt6-core24-sdk
     stage-packages:
+      - openjdk-25-jre
       - openjdk-21-jre
       - openjdk-17-jre
       - openjdk-8-jre
+      - libtomlplusplus3t64
+      - libcmark0.30.2
+      - gamemode
 
 apps:
   prismlauncher:
@@ -59,6 +71,7 @@ apps:
       - kde-neon-6
     environment:
       PRISMLAUNCHER_DATA_DIR: "$SNAP_USER_COMMON/PrismLauncher"
+      LD_LIBRARY_PATH: "$LD_LIBRARY_PATH:$SNAP/usr/lib/x86_64-linux-gnu:$SNAP/usr/lib/i386-linux-gnu"
     plugs:
       - home
       - opengl
